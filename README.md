@@ -31,7 +31,7 @@
 
 ## 系统数据路径
 
-\`\`\`mermaid
+```mermaid
 flowchart LR
     A[以太网报文] --> B[PHY / RGMII]
     B --> C[Ethernet MAC / AXI Stream]
@@ -41,7 +41,7 @@ flowchart LR
     F --> G[Top / Middle / Bottom]
     H[PS 控制与查询] -->|DMA 查询键| F
     F -->|DMA 频次结果| H
-\`\`\`
+```
 
 ## 技术资料导航
 
