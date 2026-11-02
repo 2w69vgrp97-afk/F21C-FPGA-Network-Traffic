@@ -1,28 +1,35 @@
-# Reproduction prerequisites and limits
+# 工程配置与复现指引
 
-**This is a prerequisite guide, not an executable build recipe.** No Vivado project, HLS implementation, board design, platform/BSP, software source, or vendor IP configuration is currently supplied in this repository.
+本文说明 F21C 原型的工程组成、必要依赖和将来复现时应核对的步骤。现阶段它是**工程恢复参考**，而不是已执行通过的构建脚本。
 
-## Expected environment (from internal project records)
+## 1. 开发环境
 
-1. A machine with AMD Vivado, Vitis and Vitis HLS 2025.2 installed, with support for the Zynq-7020 device.
-2. Appropriate access to AXI Ethernet and other required AMD/Xilinx IP and to any vendor-supplied generated drivers.
-3. The project's authorized RTL/HLS sources and headers, board constraints, XPR/BD/IP configurations, and rebuild Tcl where applicable.
-4. A matching PS software application, hardware platform/XSA and BSP generated with the correct tool/device settings.
-5. A reproducibility log recording command lines, tool versions, source/IP configuration hashes, errors and timing/DRC/CDC results.
+- AMD Vivado / Vitis / Vitis HLS **2025.2**；
+- Zynq-7020 对应器件支持及 AC7021B 板级约束；
+- 合法获取并适配工程版本的 AXI Ethernet 等 IP；
+- 与 Vivado 硬件平台匹配的 Vitis BSP、驱动与软件项目。
 
-## What the archived review located
+## 2. 工程组成
 
-The full archived project was reported to contain an XPR, a block design, approximately 60 project XCI files, HLS component metadata and reconstruction Tcl. These were over-filtered from the reduced technical candidate. Their existence in the **internal** archive does not establish permission to redistribute them or prove that they rebuild the final BIT.
+| 子系统 | 主要材料 |
+| --- | --- |
+| PL 工程 | RTL、XDC、XPR/BD、XCI 与 Tcl |
+| HLS | 顶层及相关 C/C++、头文件、综合配置、接口与 IP 打包描述 |
+| PS 软件 | 应用源码、平台/XSA、BSP 和匹配的外设驱动 |
+| 验证 | HLS C 仿真、综合/实现报告、接口验证、板级测试与数据口径 |
 
-Some HLS headers were reproduced as separately sanitized internal-review copies. A PS app configuration retained an absolute machine path, and generated PS drivers and platform dependencies were not included in the reduced candidate.
+原始内部项目归档中已有 XPR、BD、IP 配置及工程 Tcl 的定位记录。最终重建时需确认这些文件与所选版本、IP 依赖和工具环境一致。
 
-## Suggested future gated validation
+## 3. 推荐的复现顺序
 
-- **Gate 1: Rights and security.** Establish owners and applicable third-party licenses; review each actual release file, strip machine-specific paths/secrets and preserve required notices.
-- **Gate 2: Dependency closure.** Trace RTL instances, HLS includes, BD/IP references and PS software/BSP dependencies.
-- **Gate 3: Isolated tool run.** Launch the tools successfully and record real project-open, HLS C simulation/compilation, IP validation and PS build outcomes.
-- **Gate 4: Hardware evidence.** Independently rebuild the selected BIT and ELF, verify platform/revision identity and close CDC concerns before claiming a verified Candidate-B board-level reproduction.
+1. **确认版本与权限：** 确定 RTL/HLS、BD/IP、PS 软件及第三方依赖对应的版本和使用条件。
+2. **检查文件依赖：** 核实层级、头文件、接口、约束、IP 配置及相关生成步骤。
+3. **恢复 PL/HLS：** 按实际 Tcl/工程设置创建项目，并记录 HLS C 仿真、IP 状态、综合与实现结果。
+4. **恢复 PS：** 用匹配硬件平台建立 BSP 和软件构建，核实 DMA、控制寄存器及查询接口。
+5. **板级核查：** 记录 BIT/XSA/ELF 配对、时钟域风险、加载过程和实测数据。
 
-Do not label an attempted tool launch, file include scan or historical unrelated test as a successful build.
+## 4. 当前提供范围
 
-See [VALIDATION_STATUS.md](VALIDATION_STATUS.md) for current state.
+仓库目前只包含技术说明文档，不包含可直接执行上述步骤的 RTL/HLS/PS 源码及完整工程配置。因此**尚不支持仅依赖本仓库独立复现最终系统**。Candidate-B 最终 BIT/ELF 配对与 CDC 问题的当前验证状态参见 [验证记录](VALIDATION_STATUS.md)。
+
+任何后续重建结果都应由实际运行日志确认，不将工程文件存在或工具启动等同于构建成功。
