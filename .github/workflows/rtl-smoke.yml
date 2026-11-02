@@ -1,0 +1,28 @@
+name: RTL helper smoke test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "hardware/rtl/*.v"
+      - "verification/rtl/**"
+      - ".github/workflows/rtl-smoke.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rtl-smoke:
+    name: Icarus Verilog smoke test
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Install Icarus Verilog
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y iverilog
+      - name: Compile and run RTL smoke test
+        run: python3 verification/rtl/run_rtl_smoke.py
