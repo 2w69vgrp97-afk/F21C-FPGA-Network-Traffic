@@ -1,24 +1,32 @@
-# AI-assisted engineering disclosure
+# AI 辅助 FPGA 工程工作流
 
-This document describes classes of assistance used while preparing the F21C project documentation and internal engineering review. It is **not** an exported conversation log, a reproducibility proof or a claim that AI-generated output was used without human review.
+F21C 开发和资料整理过程中，AI 工具用于辅助阅读工程信息、检查接口逻辑、梳理验证条件和组织技术说明。AI 给出的建议需要与源码、工具输出或实测记录对照，最终技术判断由项目成员完成。
 
-## Documented workstreams
+## 与 FPGA 设计相关的协作方向
 
-1. **Technical writing and communication:** drafting, editing and reviewing descriptions of the architecture, methods and test boundaries.
-2. **Diagram review:** iterating system data-path and control-flow diagrams against known interfaces and source records; avoiding schematic details that cannot be backed by the implementation.
-3. **Source-package release review:** checking delivery manifests, grouping candidate files, triaging sensitive-pattern alerts, documenting provenance, separating rights approval from technical readiness, and tracking missing rebuild dependencies.
-4. **Tool troubleshooting:** recording unsuccessful Vivado/Vitis launch attempts without mislabeling them as synthesis or simulation failures.
+### 1. 数据通路和接口核查
 
-## Quality and disclosure rules
+对以太网接收链路、AXI Stream、流键解析、PS/PL 查询通路和 DMA 数据宽度进行结构化检查，辅助厘清 RTL/HLS/PS 各模块职责。人工依据工程接口与源码记录复核结论。
 
-- Maintain a distinction between historical logs, present measurements, and unverified statements.
-- Use original source/logs to decide hardware-specific details; do not infer wiring, timing or FPGA resource behavior from prose alone.
-- Never treat AI-written text as approval to redistribute third-party source/IP.
-- Preserve experiment configuration, comparison conditions and revision identity when quoting any result.
-- AI prompts and underlying project logs are not published in this repository; no fabricated prompt transcripts or evaluation screenshots are presented.
+### 2. HLS 组织与性能口径分析
 
-## Follow-up for competition evidence
+辅助分析三级 DATAFLOW 任务组织、哈希预处理与有状态后端之间的依赖关系，梳理 UPDATE / QUERY / RESET 的顺序要求，区分局部循环节拍、内部完成间隔和端到端吞吐率。
 
-If the event requires actual AI collaboration transcripts, prompt/response examples, correction trails or reusable skills, export and screen the real underlying records, associate them with human-reviewed deliverables, and seek approval before uploading.
+### 3. 时钟域与工程验证
 
-An original **draft** review workflow is included at [../skill/fpga-release-audit/SKILL.md](../skill/fpga-release-audit/SKILL.md). Its presence does not mean it has passed an independent runtime test.
+辅助整理 RGMII 接收、时钟/复位跨域、CDC 风险及内部仿真结果的核查要点；把工具启动故障、编译失败、时序结果和板级测试结果作为不同证据层次记录。
+
+### 4. 技术成果表达
+
+将项目架构、仿真/实现结果及实验条件组织成图表和说明，检查结构图与工程接口的一致性；保持设计选择、验证结果和应用价值之间的对应关系。
+
+## 人工复核原则
+
+- 使用实际源码、约束、工具报告和测试数据确认技术细节。
+- 区分 AI 建议、人工确认以及软件/硬件工具真实验证结果。
+- 不将缺少验证证据的推断写成已通过测试的工程结论。
+- 使用第三方 IP、算法实现或驱动时遵循相应来源与许可要求。
+
+本文件是**已有 AI 协作工作类型的概述**，不是逐轮对话转录或逐条结果证明。对外展示具体协作案例时，应另外附上真实输入、输出、修改前后差异及工程复核证据。
+
+可复用的技术审查步骤见 [FPGA 设计证据核查工作流](../skill/fpga-design-review/SKILL.md)。
