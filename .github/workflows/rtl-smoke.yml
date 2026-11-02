@@ -1,4 +1,4 @@
-name: RTL helper smoke test
+name: RTL helper smoke and synthesis checks
 
 on:
   push:
@@ -14,15 +14,17 @@ permissions:
 
 jobs:
   rtl-smoke:
-    name: Icarus Verilog smoke test
+    name: Icarus Verilog + Yosys
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
-      - name: Install Icarus Verilog
+      - name: Install Icarus Verilog and Yosys
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y iverilog
+          sudo apt-get install -y iverilog yosys
       - name: Compile and run RTL smoke test
         run: python3 verification/rtl/run_rtl_smoke.py
+      - name: Run generic RTL synthesis and structural checks
+        run: python3 verification/rtl/run_rtl_synth.py
