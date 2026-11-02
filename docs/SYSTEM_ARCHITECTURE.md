@@ -6,7 +6,7 @@ F21C 将网络报文解析与流级统计处理映射到 Zynq-7020 的可编程�
 
 ## 2. 接收与统计路径
 
-\`\`\`mermaid
+```mermaid
 flowchart LR
     A[RJ45 / PHY] --> B[RGMII 接收]
     B --> C[Ethernet MAC / AXIS]
@@ -16,7 +16,7 @@ flowchart LR
     F --> G[Top / Middle / Bottom]
     H[PS 控制软件] -->|查询键 / DMA| F
     F -->|查询结果 / DMA| H
-\`\`\`
+```
 
 - **解析：** 从适用的 IPv4 TCP/UDP 报文中提取源 IP、目的 IP、源端口、目的端口和协议号。载荷不是流标识的组成部分。
 - **统计：** 分层状态设计在有限的片上存储空间中兼顾大量低频流与较高频流的计数需求。
