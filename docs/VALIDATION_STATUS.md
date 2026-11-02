@@ -1,33 +1,26 @@
-# 测试记录与验证边界
+# Validation and evidence status
 
-**记录整理日期：2026-11-02。** 本页汇总项目既有技术与实验记录，不表示这些实验在当前 GitHub 文档仓库重新执行。
+**Status date:** 2026-11-02. This page summarizes existing review records; no new FPGA compilation, simulation or physical-board test is claimed by this commit.
 
-## 一、已有成果与记录
-
-| 方向 | 既有记录 | 说明 |
+| Item | Recorded status | What it establishes |
 | --- | --- | --- |
-| 分层统计硬件映射 | 约 286 KiB 逻辑统计状态 | Top / Middle / Bottom 分层结构 |
-| 流级精度分析 | 22,709 条真实流，平均相对误差 0.33533% | 按项目既有真实流样本和统计口径 |
-| 内部流水性能对照 | Top 96→68、Middle 151→86、Bottom 153→88 周期 | 100 MHz、纯 UPDATE 连续供给；三条路径完成间隔分别缩短 29.17%、43.05%、42.48% |
-| 内部交付完整性 | 17,886 个载荷文件大小和 SHA-256 与归档清单一致 | 归档另含 2 个清单/校验文件；属于内部交付一致性验证 |
-| 工程检查资料 | 留有 HLS、FPGA 实现、PS 软件及测试相关历史记录 | 需要结合各自的工具日志、输入与版本判断适用性 |
+| Candidate-B archived delivery integrity | PASS | All 17,886 payload entries matched the archived size and SHA-256 manifest; the ZIP includes two additional manifest/check files (17,888 total). |
+| Initial pattern-scan triage | 49 FALSE_POSITIVE, 0 CONFIRMED, 0 UNRESOLVED | The 49 originally flagged patterns were found in protected vendor data blocks; this is not a comprehensive secrets clearance. |
+| Isolated internal technical candidate | 30 files, RIGHTS_PENDING | A limited internal-review selection, **not** a release-approved or complete source archive. |
+| Candidate-B source-to-final BIT rebuild | NOT VERIFIED | The exact final bitstream has not been independently reproduced from a publishable source package. |
+| Exact original ELF reproduction | NOT VERIFIED | The archived software build identity has not been reproduced exactly. |
+| Candidate-B board-test version identity | UNKNOWN | Archived BIT/ELF/platform provenance does not establish that the final Candidate-B pairing underwent the claimed board tests. |
+| CDC issues | OPEN | Critical clock-domain-crossing concerns remain unresolved. |
+| Vivado/Vitis tool execution for the reduced candidate | BLOCKED | Launch attempts failed or stalled in the recorded review environment; no new HLS simulation, project-open PASS or PS build PASS was obtained. |
+| Ethernet MAC / related vendor IP licenses | PENDING | Third-party configurations and generated files require their applicable permissions. |
+| GitHub source release | NOT APPROVED | Source and IP implementations are intentionally absent. |
 
-以上**内部周期对照是设计内命令完成节拍**，不是以太网端到端 PPS 或线速结论；精度统计也不自动证明指定比特流与软件配对在最终硬件上经过相同测试。
+## Interpretation of prior tests
 
-## 二、Candidate-B 特定版本仍需明确的验证事项
+Archived project evidence contains HLS, FPGA implementation and software checks and reports of statistical accuracy. Those are **historical records**, not tests rerun on the GitHub repository contents. Internal cycle-interval comparisons must not be presented as end-to-end Ethernet packet throughput.
 
-| 项目 | 当前可确认状态 |
-| --- | --- |
-| 从可发布源码独立重建最终 BIT | 尚未获得独立复现结果 |
-| 精确复现原始 ELF | 尚未获得独立复现结果 |
-| Candidate-B 最终 BIT、XSA、ELF 的板级测试版本身份 | 未确认同一最终配对已完成相应板级测试 |
-| CDC（跨时钟域）问题 | 现有关键风险尚未闭合 |
-| 本次精简源码候选包的 HLS/Vivado/Vitis 构建 | 未成功运行有效验证；此前受工具启动及依赖条件阻碍 |
+## Evidence availability
 
-以上是**特定交付版本的验证边界**，不应扩大解释为整个项目从未完成相关设计、内部仿真或实现工作，也不应反过来推断这些事项已通过。带评估许可或受限许可的 Ethernet IP 需按实际许可条件处理。
+Original logs, data sets, design sources, bitstreams and vendor-generated artifacts are held separately in the project's internal delivery evidence. They have **not** been published here and must not be inferred from this documentation. Any later test result should carry a date, target revision, actual command/tool version, input hash and log reference.
 
-## 三、资料范围
-
-本 GitHub 仓库当前发布的是结构与验证记录的说明文档，并未提供原始测试日志、工程源文件或可运行构建环境；因此读者不能单独使用本仓库验证上表中的实验。
-
-如后续发布测试证据，将同时列明目标版本、测试条件、输入数据、工具版本、日志以及适用范围。
+The documentation-only repository is not buildable and cannot be used to verify hardware behavior directly.
