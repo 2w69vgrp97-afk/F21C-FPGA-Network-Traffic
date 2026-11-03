@@ -1,6 +1,6 @@
 # Reproduction prerequisites and limits
 
-**This is a prerequisite guide, not an executable build recipe.** No Vivado project, HLS implementation, board design, platform/BSP, software source, or vendor IP configuration is currently supplied in this repository.
+**This is a prerequisite guide, not a full-system build recipe.** Selected RTL helpers, a partial HLS implementation, PS application source and self-contained RTL tests are included. Complete Vivado project/BD/IP configuration, full HLS dependencies, platform/BSP and vendor IP are not supplied.
 
 ## Expected environment (from internal project records)
 
@@ -26,3 +26,22 @@ Some HLS headers were reproduced as separately sanitized internal-review copies.
 Do not label an attempted tool launch, file include scan or historical unrelated test as a successful build.
 
 See [VALIDATION_STATUS.md](VALIDATION_STATUS.md) for current state.
+
+## Runnable checks for the published subset
+
+From the repository root, after installing Icarus Verilog and Yosys:
+
+```bash
+python3 verification/rtl/run_rtl_smoke.py
+python3 verification/rtl/run_rtl_synth.py
+```
+
+These checks ran successfully in [GitHub Actions](https://github.com/2w69vgrp97-afk/F21C-FPGA-Network-Traffic/actions/runs/41468797933), limited to five vendor-independent helper RTL modules.
+
+An additional original-source arithmetic regression is available for AMD Vitis HLS 2025.2, but has **not** been executed or marked PASS:
+
+```bash
+vitis_hls -f verification/hls/run_fastmod_csim.tcl
+```
+
+The HLS main implementation references `Funnelsketch.h` and `param.h`; other missing dependencies include `Top.h`, `Middle.h` and the excluded `BOBHash32.h`. The PS application likewise requires a matching platform and BSP. These are direct compilation constraints, not problems solved by the above helper RTL tests.
