@@ -25,7 +25,7 @@ flowchart LR
 
 ## Engineering interface notes
 
-The project's historical records describe a 100 MHz main PL control clock, an Ethernet transmit clock domain, and PS-to-PL query/result channels. Exact pin constraints, block design, the MAC configuration, and tool-generated platform files are **not distributed in this repository**.
+The project's historical records describe a 100 MHz main PL control clock, an Ethernet transmit clock domain, and PS-to-PL query/result channels. The frozen V3 tree includes the [block design, pin constraints and MAC configuration](../candidate-b/project/). DMA1 MM2S carries query keys from PS to HLS, and DMA0 S2MM returns query results to PS. A matching tool-generated platform is a build output.
 
 ## Status and limits
 

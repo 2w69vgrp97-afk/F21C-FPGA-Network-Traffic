@@ -1,31 +1,17 @@
-# Competition delivery status
+# Competition submission status
 
-**Last updated:** 2026-11-03. The primary design report is being revised separately and is intentionally **not** committed here.
+The submission baseline is Candidate-B V3. The [frozen delivery tree](candidate-b/) contains 118 files and corresponds to commit `6d2a960a80d2f09cc06da4019ae9fb65ffc0c20b`.
 
-| Material | This repository | Status |
-| --- | --- | --- |
-| GitHub repository link | Yes, private | Link created; reviewer visibility requires access |
-| README and dependencies | Yes | Available |
-| System architecture notes | Yes | Documentation only |
-| Verification/evidence status summary | Yes | GitHub CI has separately passed helper RTL simulation and generic Yosys synthesis; historical full-system logs are not included |
-| Reproduction prerequisites | Yes | Not an executable, verified build |
-| AI-assistance disclosure | Yes | Summary, not a raw collaboration log |
-| Draft reusable FPGA audit Skill | Yes | Draft; no independent Skill execution test |
-| RTL / HLS / PS source | Yes, partial | Six auxiliary RTL modules, six HLS-related files and one PS C source file; main HLS dependencies and complete project are still missing |
-| Vivado project, BD/XCI/Tcl, platform/BSP | No | Rights and independent rebuild validation pending |
-| Third-party IP and generated drivers | No | Licenses not cleared for redistribution |
-| Report PDF | No | Still under revision |
-| Demonstration video | No | Final selection and upload not completed |
-| Original raw test data / boards / binaries | Partial summary only | A historical S2 summary CSV is published; raw logs, full test data and binaries remain separate |
+| V3 submission archive | Value |
+| --- | --- |
+| File | `F21C_完整工程源码_竞赛提交版_V3.rar` |
+| Format and size | Single-volume RAR5, 322,731 bytes |
+| SHA-256 | `3D7642A55D8F0B43A799ED71A3FB2A8F94AA424475B2D623E036568C10B55347` |
 
-## Important: GitHub is not the competition submission portal
+V3 includes the frozen HLS sources and headers, six custom RTL helpers, the PS application, the Vivado XPR, three BD files, 60 XCI files, four XDC files, reconstruction scripts and verification material. The submission archive is provided separately through the competition portal.
 
-A private repository URL is real but cannot be read by judges without granted access. The official competition upload form, permitted visibility and required attachment fields must be checked independently. No claim of final competition submission is made here.
+The pre-exported HLS IP 2.0 directory and prebuilt BIT, XSA and ELF are outside the V3 delivery. A local-only V4 candidate adds the original 137-file HLS IP directory, totaling 5,076,303 uncompressed bytes. Its file checks passed. Vivado also registered and instantiated the archived IP and validated the full BD in local isolation. Distribution rights for the entire generated directory are pending. V4 is outside the GitHub and portal submissions.
 
-Before changing repository visibility or publishing project source, obtain actual rights-holder approval and review the public release file-by-file.
+The R2 board handoff is TEST_ONLY. The [R2 notes](candidate-b/board/R2_TEST_ONLY/) record the static artifact pairing and the session scripts. End-to-end reconstruction and board acceptance remain open. See [validation status](docs/VALIDATION_STATUS.md).
 
-## Current independently runnable GitHub checks
-
-- Five standalone auxiliary RTL modules: Icarus Verilog smoke test and Yosys generic synthesis/structural checks, [CI PASS](https://github.com/2w69vgrp97-afk/F21C-FPGA-Network-Traffic/actions/runs/41468797933).
-- `verification/hls/run_fastmod_csim.tcl`: available for AMD Vitis HLS execution, but no C-simulation PASS has yet been obtained.
-- Complete Funnel-Sketch HLS, Vivado platform, PS BSP and original Candidate-B BIT/ELF pairing remain outside the independently reproducible scope of this repository.
+Repository access is private and must be granted to authorized reviewers.
