@@ -1,0 +1,47 @@
+# Local editor, OS and transient files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+__pycache__/
+*.py[cod]
+
+# Vivado generated working directories (retain source XPR/BD/XCI/XDC/Tcl)
+.Xil/
+*.cache/
+*.runs/
+*.sim/
+*.hw/
+xsim.dir/
+*.jou
+*.log
+*.wdb
+*.vcd
+*.vpd
+
+# Vitis/Vitis HLS transient projects and compiled objects
+fastmod_csim_work/
+solution1/sim/
+solution1/syn/
+solution1/impl/
+Debug/
+Release/
+*.o
+*.obj
+*.d
+*.exe
+*.elf
+
+# Accidental local secrets and per-machine configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.p12
+*.pfx
+*.key
+
+# Do not blanket-ignore .bd/.xci/.xdc/.tcl or deliverable .bit/.hwh.
+# Review each distributable binary, IP-generated file and test log separately.
