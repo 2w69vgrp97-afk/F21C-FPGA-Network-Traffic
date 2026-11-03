@@ -1,31 +1,29 @@
 # F21C FPGA Network Flow Measurement
 
-This private repository contains the **frozen Candidate-B competition source delivery** under [candidate-b/](candidate-b/), including the RTL, HLS and PS source snapshots, Vivado BD/XCI/XDC/XPR inputs and reconstruction scripts. The original top-level RTL/HLS/PS files and tests are retained separately for standalone verification. Inclusion of source files does **not** mean the full design has been independently rebuilt.
+F21C measures per-flow packet frequencies on the AC7021B Zynq-7020 platform. Programmable logic parses eligible IPv4 TCP/UDP frames, preprocesses flow hashes and updates a Funnel-Sketch statistics core. The design adapts Funnel-Sketch into HLS tasks with FIFO decoupling and an ordered backend for updates, queries and resets.
 
-The prototype targets Zynq-7020 on the AC7021B platform and uses a Funnel-Sketch-based design with PS/PL cooperation. The archived project requires AMD Vivado, Vitis and Vitis HLS 2025.2, device support, platform/BSP and appropriately licensed IP, including AXI Ethernet. The [candidate-b/](candidate-b/) delivery now includes project BD/IP configuration and HLS/PS build entry points. AMD-licensed generated IP output products, a matching built XSA/BSP, and generated drivers must still be produced with the applicable toolchain and licenses.
+Ethernet frames enter through PHY/RGMII and the AXI Ethernet subsystem. The PS initializes the datapath, sends query keys to HLS `query_id_in` through **DMA1 MM2S**, and reads estimated counts from HLS `query_size_out` through **DMA0 S2MM**. See the [system architecture](docs/SYSTEM_ARCHITECTURE.md).
 
-Historical delivery records report limited project-opening, HLS C simulation and PS build checks. A complete source-to-final-BIT rebuild and exact original ELF reproduction remain unverified. The Candidate-B board-test version identity is unknown and CDC risks remain open. The latest recorded B bitstream is TEST_ONLY. A source-level competition delivery is present, but a full source-to-bitstream and PS application reproduction from this delivery has **not** yet been verified.
+## Project entry points
 
-Additional source files require appropriate sharing rights and a sensitive-information review. Competition portal uploads (including the separately required RAR source package) are distinct from this GitHub repository. Because this repository is private, judges require explicitly granted access.
+| Area | Repository location |
+| --- | --- |
+| Frozen Candidate-B V3 | [candidate-b/](candidate-b/) |
+| Vivado project and block design | [FINAL_RUNTIME.xpr](candidate-b/project/FINAL_RUNTIME.xpr), [FS_Design.bd](candidate-b/project/FINAL_RUNTIME.srcs/sources_1/bd/FS_Design/FS_Design.bd), [project configuration](candidate-b/project/) |
+| Funnel-Sketch and HLS top | [Frozen HLS inputs and testbenches](candidate-b/snapshots/main_workspace/02_WORK/hls_synthesis_iteration_1/project_retry2/inputs/) |
+| PS application | [main.c](candidate-b/snapshots/ps_workspace/F21C_FINAL_RUNTIME_APP/src/main.c) |
+| Build entry points | [candidate-b/scripts/](candidate-b/scripts/), [reproduction guide](docs/REPRODUCTION_GUIDE.md) |
+| Standalone test inputs | [hardware/](hardware/), [hls/](hls/), [software/](software/), [verification/](verification/) |
+| Evidence and technical notes | [V3 evidence](candidate-b/evidence/), [docs/](docs/), [R2 test-only notes](verification/r2/README.md) |
 
-## Standalone RTL smoke test
+## Build and validation
 
-Run `python3 verification/rtl/run_rtl_smoke.py` with Icarus Verilog (`iverilog` and `vvp`) installed. GitHub Actions executes this test and five-helper-module generic Yosys synthesis/structural checks. [Both passed in the recorded CI run](https://github.com/2w69vgrp97-afk/F21C-FPGA-Network-Traffic/actions/runs/41468797933). This smoke test covers only the vendor-independent helper RTL, not the HLS core, Ethernet MAC, or full board-level design.
+Use Vivado, Vitis and Vitis HLS 2025.2 with Zynq-7000 device support. The build guide covers HLS IP export, Vivado catalog registration, BD validation and PS platform generation. The repository contains the frozen HLS source and Vivado configuration. The pre-exported HLS IP 2.0, matching XSA/BSP and built BIT/ELF are external build inputs or outputs as described in [dependencies](DEPENDENCIES.md).
 
-## Published code and tests
+Five standalone RTL helpers passed Icarus simulation and Yosys generic synthesis in the [recorded CI run](https://github.com/2w69vgrp97-afk/F21C-FPGA-Network-Traffic/actions/runs/41468797933). In a separate local run, Vivado recognized and instantiated the archived HLS IP 2.0, opened the full XPR and validated the BD. The frozen FastMod host regression recorded 9,329 mismatches, and the HLS CSim attempts did not reach PASS. Full synthesis, implementation, matched BIT/XSA/ELF reproduction and board validation remain open. See [validation status](docs/VALIDATION_STATUS.md).
 
-- [RTL helpers](hardware/rtl/): six Verilog modules; [RTL testbench and runner](verification/rtl/) cover five vendor-independent helpers. The sixth RTL helper instantiates AMD's IDELAYCTRL primitive and is outside this generic smoke/synthesis test.
-- [Top-level HLS test subset](hls/): selected implementation and test programs whose includes are incomplete **when used alone**. The frozen Candidate-B HLS sources, including `Funnelsketch.h`, `Top.h`, `Middle.h`, `param.h`, and `BOBHash32.h`, are now included under [candidate-b/snapshots/](candidate-b/snapshots/); HLS C simulation and full IP rebuild remain unverified.
-- [PS application](software/ps/main.c): the software control source, which needs a matching XSA/platform, BSP and generated peripheral drivers.
-- [FastMod regression](verification/hls/): a Vitis HLS C-simulation check of the existing modulo functions. Vitis HLS 2025.2 timed out before C simulation began. The same regression compiled with the 2025.2 `ap_int` headers and run as a [host executable](verification/hls/fastmod_host_2025_2.log) reported 9,329 mismatches.
-- [Measurement summary](verification/measurements/s2_1024b_ladder_summary.csv): a subset of historical S2 experiment data, not a fresh full-system benchmark.
+## Competition delivery
 
-Use `python3 verification/rtl/run_rtl_smoke.py` for helper RTL simulation and `python3 verification/rtl/run_rtl_synth.py` with Yosys for generic synthesis checks. See [validation status](docs/VALIDATION_STATUS.md) for what these results establish.
+[Submission status](SUBMISSION_STATUS.md) identifies V3 and the local-only V4 candidate. Historical reports and R2 test-only materials are labeled in their respective directories. This repository provides technical documentation and verification records. Competition reports and demo materials are handled separately. The [AI collaboration note](docs/AI_COLLABORATION.md) describes the scope of assistance. The [release review skill](skill/fpga-release-audit/SKILL.md) is a draft with independent runtime validation pending.
 
-## Candidate-B competition source
-
-[candidate-b/README.md](candidate-b/README.md) describes the frozen competition
-source and Vivado, HLS and PS build entry points. The full source tree lives
-under candidate-b/. The existing top-level source paths remain available for
-the standalone verification programs. See the build guide for the FastMod
-regression and the current limits of full-system validation.
+The repository is private. Reviewers need access granted by the team. AXI Ethernet uses separately licensed AMD IP, and the generated HLS IP package has a separate distribution review.
