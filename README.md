@@ -21,3 +21,11 @@ Run `python3 verification/rtl/run_rtl_smoke.py` with Icarus Verilog (`iverilog` 
 - [Measurement summary](verification/measurements/s2_1024b_ladder_summary.csv): a subset of historical S2 experiment data, not a fresh full-system benchmark.
 
 Use `python3 verification/rtl/run_rtl_smoke.py` for helper RTL simulation and `python3 verification/rtl/run_rtl_synth.py` with Yosys for generic synthesis checks. See [validation status](docs/VALIDATION_STATUS.md) for what these results establish.
+
+## Candidate-B competition source
+
+[candidate-b/README.md](candidate-b/README.md) describes the frozen competition
+source and Vivado, HLS and PS build entry points. The full source tree lives
+under candidate-b/. The existing top-level source paths remain available for
+the standalone verification programs. See the build guide for the FastMod
+regression and the current limits of full-system validation.
