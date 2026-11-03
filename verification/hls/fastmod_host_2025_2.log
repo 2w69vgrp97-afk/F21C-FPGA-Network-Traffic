@@ -1,0 +1,30 @@
+Candidate-B FastMod host regression (2026-11-04)
+Scope: native MinGW executable using AMD Vitis 2025.2 ap_int headers. This is not Vitis HLS CSim.
+FastMod.h SHA-256: e2e25788304a048b8cc4c7790da8e2c08ff14aadf8f6dac5f7760e0bbf0a7332 (matches frozen Candidate-B).
+Test source and wrapper: verification/hls, commit c003e857fb6a0863ca34b8403120005982ccf203.
+
+g++.exe (x86_64-win32-sjlj-rev1, Built by MinGW-W64 project) 6.2.0
+Copyright (C) 2016 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+g++ -std=c++14 -O2 -I<2025.2 Vitis include> verification/hls/fastmod_check.cpp verification/hls/fastmod_check_tb.cpp -o fastmod_host.exe
+compile=0
+MISMATCH x=0x10000000: mod25 6/6; mod1004 400/996; mod87040 4096/4096
+MISMATCH x=0x20000000: mod25 12/12; mod1004 800/988; mod87040 8192/8192
+MISMATCH x=0x40000000: mod25 24/24; mod1004 0/972; mod87040 16384/16384
+MISMATCH x=0x80000000: mod25 23/23; mod1004 0/940; mod87040 32768/32768
+MISMATCH x=0x12345678: mod25 21/21; mod1004 492/84; mod87040 83576/83576
+MISMATCH x=0xFFFFFFFF: mod25 20/20; mod1004 639/875; mod87040 65535/65535
+MISMATCH x=0xBA01ACAD: mod25 17/17; mod1004 245/965; mod87040 26797/26797
+MISMATCH x=0x7D1D2787: mod25 13/13; mod1004 75/867; mod87040 6023/6023
+MISMATCH x=0xE458C551: mod25 4/4; mod1004 801/893; mod87040 44369/44369
+MISMATCH x=0x62A1FE28: mod25 3/3; mod1004 612/768; mod87040 66088/66088
+MISMATCH x=0xF1FEC3DA: mod25 13/13; mod1004 334/18; mod87040 24538/24538
+MISMATCH x=0x19377418: mod25 0/0; mod1004 492/84; mod87040 50200/50200
+MISMATCH x=0x4778E460: mod25 20/20; mod1004 844/812; mod87040 42080/42080
+MISMATCH x=0x256DFADA: mod25 9/9; mod1004 598/786; mod87040 58074/58074
+MISMATCH x=0xDCE80FE1: mod25 12/12; mod1004 721/217; mod87040 32737/32737
+MISMATCH x=0x7F9C6C0B: mod25 7/7; mod1004 207/999; mod87040 34827/34827
+FAIL: 9329 FastMod exactness mismatch(es)
+test=1
