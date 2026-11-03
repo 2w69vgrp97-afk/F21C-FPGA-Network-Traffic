@@ -64,3 +64,15 @@ a matching XSA and full PS/BIT builds remain unverified on this host.
   tree because their artifacts have a separate identity.
 
 V2 local check: Icarus smoke PASS on 2026-11-04. Yosys was unavailable.
+
+## V3 board handoff
+
+board/R2_TEST_ONLY contains the original relative-path XSCT session and
+integrity scripts, candidate hashes, and static pairing results for AC7021B.
+The R2 XSA embeds the exact R2 BIT, its PS init matches, and the archived
+platform records link its ELF to that XSA. R2 is for controlled testing.
+The frozen handoff XSA embeds a different BIT and advertises HLS 1.1.
+No matched release image was found. R2 binaries and PS initialization
+are retained locally pending confirmation of AMD evaluation-IP distribution
+rights. The archived R2 BIT uses Ethernet evaluation IP.
+The original R2 board package is required to exercise the session scripts.
