@@ -1,0 +1,13 @@
+HISTORICAL_REFERENCE | Selected output; machine identifiers and paths omitted.
+INFO: [SIM 2] *************** CSIM start ***************
+   Compiling ../../../inputs/fs_hls_tb_query_functional.cpp in debug mode
+   Compiling ../../../inputs/candidate_b/HLS_Design/fs_hls_test.cpp in debug mode
+   Generating csim.exe
+QUERY_CASE name=c3_baseline updates=0 key=0xB25B8388C04A8F1E expected=0 actual=0 status=PASS
+QUERY_CASE name=one_update updates=1 key=0xBE45E320C9F1E134 expected=1 actual=1 status=PASS
+QUERY_CASE name=ten_updates updates=10 key=0x624571AC470A6060 expected=10 actual=10 status=PASS
+QUERY_CASE name=c3_eighty_eight_updates updates=88 key=0xB25B8388C04A8F1E expected=88 actual=88 status=PASS
+QUERY_FUNCTIONAL_CSIM = PASS
+INFO [HLS SIM]: The maximum depth reached by any hls::stream() instance in the design is 5337
+INFO: [SIM 1] CSim done with 0 errors.
+INFO: [SIM 3] *************** CSIM finish ***************

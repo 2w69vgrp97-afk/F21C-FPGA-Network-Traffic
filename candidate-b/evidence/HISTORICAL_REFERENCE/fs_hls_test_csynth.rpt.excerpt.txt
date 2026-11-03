@@ -1,0 +1,167 @@
+HISTORICAL_REFERENCE | Selected output; machine identifiers and paths omitted.
+
+
+================================================================
+== Vitis HLS Report for 'fs_hls_test'
+================================================================
+* Date:           Tue Sep 29 12:31:29 2026
+
+* Version:        2025.2 (Build 6295257 on Nov 14 2025)
+* Project:        project_retry2
+* Solution:       hls (Vivado IP Flow Target)
+* Product family: zynq
+* Target device:  xc7z020-clg484-2
+
+
+================================================================
+== Performance Estimates
+================================================================
++ Timing: 
+    * Summary: 
+    +--------+----------+----------+------------+
+    |  Clock |  Target  | Estimated| Uncertainty|
+    +--------+----------+----------+------------+
+    |ap_clk  |  10.00 ns|  7.172 ns|     2.70 ns|
+    +--------+----------+----------+------------+
+
++ Latency: 
+    * Summary: 
+    +---------+---------+----------+----------+-----+--------+----------+
+    |  Latency (cycles) |  Latency (absolute) |   Interval   | Pipeline |
+    |   min   |   max   |    min   |    max   | min |   max  |   Type   |
+    +---------+---------+----------+----------+-----+--------+----------+
+    |       35|   261130|  0.350 us|  2.611 ms|   31|  261126|  dataflow|
+    +---------+---------+----------+----------+-----+--------+----------+
+
+    + Detail: 
+        * Instance: 
+        +-------------------+----------------+---------+---------+----------+----------+-----+--------+----------+
+        |                   |                |  Latency (cycles) |  Latency (absolute) |   Interval   | Pipeline |
+        |      Instance     |     Module     |   min   |   max   |    min   |    max   | min |   max  |   Type   |
+        +-------------------+----------------+---------+---------+----------+----------+-----+--------+----------+
+        |issue_reset_U0     |issue_reset     |        0|        0|      0 ns|      0 ns|    0|       0|        no|
+        |KPN_U0             |KPN             |       35|   261130|  0.350 us|  2.611 ms|   31|  261126|  dataflow|
+        |wait_for_reset_U0  |wait_for_reset  |        0|        0|      0 ns|      0 ns|    0|       0|        no|
+        +-------------------+----------------+---------+---------+----------+----------+-----+--------+----------+
+
+        * Loop: 
+        N/A
+
+
+
+================================================================
+== Utilization Estimates
+================================================================
+* Summary: 
++-----------------+---------+-----+--------+-------+-----+
+|       Name      | BRAM_18K| DSP |   FF   |  LUT  | URAM|
++-----------------+---------+-----+--------+-------+-----+
+|DSP              |        -|    -|       -|      -|    -|
+|Expression       |        -|    -|       0|      1|    -|
+|FIFO             |        -|    -|     297|    204|    -|
+|Instance         |      201|   10|   11527|  17126|    -|
+|Memory           |        -|    -|       -|      -|    -|
+|Multiplexer      |        -|    -|       -|      -|    -|
+|Register         |        -|    -|       -|      -|    -|
++-----------------+---------+-----+--------+-------+-----+
+|Total            |      201|   10|   11824|  17331|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Available        |      280|  220|  106400|  53200|    0|
++-----------------+---------+-----+--------+-------+-----+
+|Utilization (%)  |       71|    4|      11|     32|    0|
++-----------------+---------+-----+--------+-------+-----+
+
++ Detail: 
+    * Instance: 
+    +-------------------+----------------+---------+----+-------+-------+-----+
+    |      Instance     |     Module     | BRAM_18K| DSP|   FF  |  LUT  | URAM|
+    +-------------------+----------------+---------+----+-------+-------+-----+
+    |CTRL_BUS_s_axi_U   |CTRL_BUS_s_axi  |        0|   0|     43|     42|    0|
+    |KPN_U0             |KPN             |      201|  10|  11479|  17019|    0|
+    |issue_reset_U0     |issue_reset     |        0|   0|      3|     37|    0|
+    |wait_for_reset_U0  |wait_for_reset  |        0|   0|      2|     28|    0|
+    +-------------------+----------------+---------+----+-------+-------+-----+
+    |Total              |                |      201|  10|  11527|  17126|    0|
+    +-------------------+----------------+---------+----+-------+-------+-----+
+
+    * DSP: 
+    N/A
+
+    * Memory: 
+    N/A
+
+    * FIFO: 
+    +-----------------+---------+----+----+-----+------+-----+---------+
+    |       Name      | BRAM_18K| FF | LUT| URAM| Depth| Bits| Size:D*B|
+    +-----------------+---------+----+----+-----+------+-----+---------+
+    |init_rst_c_U     |        0|  99|   0|    -|     3|    1|        3|
+    |reset_done_U     |        0|  99|   0|    -|     2|    1|        2|
+    |reset_request_U  |        0|  99|   0|    -|     2|    1|        2|
+    +-----------------+---------+----+----+-----+------+-----+---------+
+    |Total            |        0| 297|   0|    0|     7|    3|        7|
+    +-----------------+---------+----+----+-----+------+-----+---------+
+
+    * Expression: 
+    +--------------+----------+----+---+----+------------+------------+
+    | Variable Name| Operation| DSP| FF| LUT| Bitwidth P0| Bitwidth P1|
+    +--------------+----------+----+---+----+------------+------------+
+    |ap_idle       |       and|   0|  0|   1|           1|           1|
+    +--------------+----------+----+---+----+------------+------------+
+    |Total         |          |   0|  0|   1|           1|           1|
+    +--------------+----------+----+---+----+------------+------------+
+
+    * Multiplexer: 
+    N/A
+
+    * Register: 
+    N/A
+
+
+
+================================================================
+== Interface
+================================================================
+* Summary: 
++------------------------+-----+-----+------------+-------------------------+--------------+
+|        RTL Ports       | Dir | Bits|  Protocol  |      Source Object      |    C Type    |
++------------------------+-----+-----+------------+-------------------------+--------------+
+|s_axi_CTRL_BUS_AWVALID  |   in|    1|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_AWREADY  |  out|    1|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_AWADDR   |   in|    5|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_WVALID   |   in|    1|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_WREADY   |  out|    1|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_WDATA    |   in|   32|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_WSTRB    |   in|    4|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_ARVALID  |   in|    1|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_ARREADY  |  out|    1|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_ARADDR   |   in|    5|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_RVALID   |  out|    1|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_RREADY   |   in|    1|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_RDATA    |  out|   32|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_RRESP    |  out|    2|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_BVALID   |  out|    1|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_BREADY   |   in|    1|       s_axi|                 CTRL_BUS|        scalar|
+|s_axi_CTRL_BUS_BRESP    |  out|    2|       s_axi|                 CTRL_BUS|        scalar|
+|ap_clk                  |   in|    1|  ap_ctrl_hs|              fs_hls_test|  return value|
+|ap_rst_n                |   in|    1|  ap_ctrl_hs|              fs_hls_test|  return value|
+|interrupt               |  out|    1|  ap_ctrl_hs|              fs_hls_test|  return value|
+|pkt_in_TDATA            |   in|    8|        axis|          pkt_in_V_data_V|       pointer|
+|pkt_in_TKEEP            |   in|    1|        axis|          pkt_in_V_keep_V|       pointer|
+|pkt_in_TSTRB            |   in|    1|        axis|          pkt_in_V_strb_V|       pointer|
+|pkt_in_TLAST            |   in|    1|        axis|          pkt_in_V_last_V|       pointer|
+|pkt_in_TVALID           |   in|    1|        axis|          pkt_in_V_last_V|       pointer|
+|pkt_in_TREADY           |  out|    1|        axis|          pkt_in_V_last_V|       pointer|
+|query_id_in_TDATA       |   in|   64|        axis|     query_id_in_V_data_V|       pointer|
+|query_id_in_TKEEP       |   in|    8|        axis|     query_id_in_V_keep_V|       pointer|
+|query_id_in_TSTRB       |   in|    8|        axis|     query_id_in_V_strb_V|       pointer|
+|query_id_in_TLAST       |   in|    1|        axis|     query_id_in_V_last_V|       pointer|
+|query_id_in_TVALID      |   in|    1|        axis|     query_id_in_V_last_V|       pointer|
+|query_id_in_TREADY      |  out|    1|        axis|     query_id_in_V_last_V|       pointer|
+|query_size_out_TDATA    |  out|   32|        axis|  query_size_out_V_data_V|       pointer|
+|query_size_out_TKEEP    |  out|    4|        axis|  query_size_out_V_keep_V|       pointer|
+|query_size_out_TSTRB    |  out|    4|        axis|  query_size_out_V_strb_V|       pointer|
+|query_size_out_TLAST    |  out|    1|        axis|  query_size_out_V_last_V|       pointer|
+|query_size_out_TVALID   |  out|    1|        axis|  query_size_out_V_last_V|       pointer|
+|query_size_out_TREADY   |   in|    1|        axis|  query_size_out_V_last_V|       pointer|
++------------------------+-----+-----+------------+-------------------------+--------------+
+
