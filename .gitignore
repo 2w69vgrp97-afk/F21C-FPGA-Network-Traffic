@@ -16,7 +16,6 @@ __pycache__/
 *.hw/
 xsim.dir/
 *.jou
-*.log
 *.wdb
 *.vcd
 *.vpd
@@ -32,7 +31,6 @@ Release/
 *.obj
 *.d
 *.exe
-*.elf
 
 # Accidental local secrets and per-machine configuration
 .env
@@ -43,5 +41,5 @@ Release/
 *.pfx
 *.key
 
-# Do not blanket-ignore .bd/.xci/.xdc/.tcl or deliverable .bit/.hwh.
+# Do not blanket-ignore .bd/.xci/.xdc/.tcl or deliverable .bit/.elf/.hwh or verification logs.
 # Review each distributable binary, IP-generated file and test log separately.
