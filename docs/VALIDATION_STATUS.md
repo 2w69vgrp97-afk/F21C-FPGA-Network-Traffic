@@ -1,6 +1,6 @@
 # Validation and evidence status
 
-**Status date:** 2026-11-02. This page summarizes existing review records; no new FPGA compilation, simulation or physical-board test is claimed by this commit.
+**Historical review baseline:** 2026-11-02. GitHub source/CI status updated 2026-11-03. Archived full-system tests are distinct from the standalone GitHub CI checks below.
 
 | Item | Recorded status | What it establishes |
 | --- | --- | --- |
@@ -13,7 +13,7 @@
 | CDC issues | OPEN | Critical clock-domain-crossing concerns remain unresolved. |
 | Vivado/Vitis tool execution for the reduced candidate | BLOCKED | Launch attempts failed or stalled in the recorded review environment; no new HLS simulation, project-open PASS or PS build PASS was obtained. |
 | Ethernet MAC / related vendor IP licenses | PENDING | Third-party configurations and generated files require their applicable permissions. |
-| GitHub source release | NOT APPROVED | Source and IP implementations are intentionally absent. |
+| GitHub source release | PARTIAL | Six auxiliary RTL, six HLS-related and one PS source file are present. Third-party protected implementations and core build dependencies remain absent. |
 
 ## Interpretation of prior tests
 
@@ -21,6 +21,16 @@ Archived project evidence contains HLS, FPGA implementation and software checks 
 
 ## Evidence availability
 
-Original logs, data sets, design sources, bitstreams and vendor-generated artifacts are held separately in the project's internal delivery evidence. They have **not** been published here and must not be inferred from this documentation. Any later test result should carry a date, target revision, actual command/tool version, input hash and log reference.
+Most original logs, full data sets, bitstreams and vendor-generated artifacts remain in the internal delivery evidence. Selected RTL/HLS/PS source files and an S2 measurement summary **are** published here; their presence does not prove full-system reproduction. Any later test result should carry a date, target revision, actual command/tool version, input hash and log reference.
 
-The documentation-only repository is not buildable and cannot be used to verify hardware behavior directly.
+The repository can independently run limited auxiliary RTL checks, but does not yet support complete HLS, PS, Vivado or board-level reconstruction.
+
+## GitHub-hosted regression evidence
+
+| Check | Source files and scope | Recorded outcome |
+| --- | --- | --- |
+| Icarus Verilog helper RTL smoke test | `verification/rtl/rtl_smoke_tb.sv` and five standalone helpers | PASS in GitHub Actions on [2026-11-02](https://github.com/2w69vgrp97-afk/F21C-FPGA-Network-Traffic/actions/runs/41468797933) |
+| Yosys generic synthesis and structural checks | Same five vendor-independent helper modules; excludes `pl_idelayctrl.v` | PASS in the [same CI run](https://github.com/2w69vgrp97-afk/F21C-FPGA-Network-Traffic/actions/runs/41468797933) |
+| FastMod HLS arithmetic C simulation | `verification/hls/run_fastmod_csim.tcl` with original `FastMod.h` | NOT RUN; script has been published, no actual Vitis HLS test result yet |
+
+Neither CI PASS above is evidence of Ethernet MAC integration, the Funnel-Sketch backend, CDC closure, a full bitstream, or board-level operation.
