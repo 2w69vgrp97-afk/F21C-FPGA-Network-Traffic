@@ -17,7 +17,7 @@ Run `python3 verification/rtl/run_rtl_smoke.py` with Icarus Verilog (`iverilog` 
 - [RTL helpers](hardware/rtl/): six Verilog modules; [RTL testbench and runner](verification/rtl/) cover five vendor-independent helpers. The sixth RTL helper instantiates AMD's IDELAYCTRL primitive and is outside this generic smoke/synthesis test.
 - [HLS subset](hls/): selected Funnel-Sketch implementation, headers and test programs. The complete HLS core cannot currently be built from these files because of missing dependencies including `Funnelsketch.h`, `Top.h`, `Middle.h`, `param.h`, and the excluded `BOBHash32.h` implementation.
 - [PS application](software/ps/main.c): the software control source, which needs a matching XSA/platform, BSP and generated peripheral drivers.
-- [FastMod regression](verification/hls/): a Vitis HLS C-simulation check of the existing modulo functions. **Not yet run in Vitis HLS**; no PASS is claimed for this test.
+- [FastMod regression](verification/hls/): a Vitis HLS C-simulation check of the existing modulo functions. Vitis HLS 2025.2 timed out before C simulation began. The same regression compiled with the 2025.2 `ap_int` headers and run as a [host executable](verification/hls/fastmod_host_2025_2.log) reported 9,329 mismatches.
 - [Measurement summary](verification/measurements/s2_1024b_ladder_summary.csv): a subset of historical S2 experiment data, not a fresh full-system benchmark.
 
 Use `python3 verification/rtl/run_rtl_smoke.py` for helper RTL simulation and `python3 verification/rtl/run_rtl_synth.py` with Yosys for generic synthesis checks. See [validation status](docs/VALIDATION_STATUS.md) for what these results establish.
