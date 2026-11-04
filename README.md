@@ -24,6 +24,6 @@ Five standalone RTL helpers passed Icarus simulation and Yosys generic synthesis
 
 ## Competition delivery
 
-[Submission status](SUBMISSION_STATUS.md) identifies V3 and the local-only V4 candidate. Historical reports and R2 test-only materials are labeled in their respective directories. This repository provides technical documentation and verification records. Competition reports and demo materials are handled separately. The [AI collaboration note](docs/AI_COLLABORATION.md) describes the scope of assistance. The [release review skill](skill/fpga-release-audit/SKILL.md) is a draft with independent runtime validation pending.
+[Submission status](SUBMISSION_STATUS.md) identifies the local A handoff and competition-upload candidate B. Historical reports and R2 test-only materials are labeled in their respective directories. This repository provides technical documentation and verification records. Competition reports and demo materials are handled separately. The [AI collaboration note](docs/AI_COLLABORATION.md) describes the scope of assistance. The [release review skill](skill/fpga-release-audit/SKILL.md) is a draft with independent runtime validation pending.
 
-The repository is private. Reviewers need access granted by the team. AXI Ethernet uses separately licensed AMD IP, and the generated HLS IP package has a separate distribution review.
+This repository is public. AXI Ethernet uses separately licensed AMD IP, and the generated HLS IP package has a separate distribution review.
