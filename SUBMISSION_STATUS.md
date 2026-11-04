@@ -1,17 +1,14 @@
 # Competition submission status
 
-The submission baseline is Candidate-B V3. The [frozen delivery tree](candidate-b/) contains 118 files and corresponds to commit `6d2a960a80d2f09cc06da4019ae9fb65ffc0c20b`.
+The public [frozen Candidate-B V3 delivery tree](candidate-b/) contains 118 files and corresponds to commit `6d2a960a80d2f09cc06da4019ae9fb65ffc0c20b`. The latest separate local candidates are:
 
-| V3 submission archive | Value |
-| --- | --- |
-| File | `F21C_完整工程源码_竞赛提交版_V3.rar` |
-| Format and size | Single-volume RAR5, 322,731 bytes |
-| SHA-256 | `3D7642A55D8F0B43A799ED71A3FB2A8F94AA424475B2D623E036568C10B55347` |
+| Candidate | Purpose | Size | SHA-256 |
+| --- | --- | ---: | --- |
+| A: `F21C_完整工程与验证成果_本地交接候选.rar` | Complete local engineering handoff; not an upload-ready release | 28,648,385 bytes | `84AFA4EF777151B0D38562E2FF9F1A47AC081E7D3A577A526EE5DE2B5E806DD9` |
+| B: `F21C_竞赛平台上传候选_最终验收.rar` | Competition-upload candidate | 325,352 bytes | `D191436A3A8B9F431EE61D2EF93C39E291270070B39E7148CB57093FA0D4B713` |
 
-V3 includes the frozen HLS sources and headers, six custom RTL helpers, the PS application, the Vivado XPR, three BD files, 60 XCI files, four XDC files, reconstruction scripts and verification material. The submission archive is provided separately through the competition portal.
+A competition portal submission receipt has not been confirmed. The candidate designation and archive integrity do not establish distribution permission or an actual submission.
 
-The pre-exported HLS IP 2.0 directory and prebuilt BIT, XSA and ELF are outside the V3 delivery. A local-only V4 candidate adds the original 137-file HLS IP directory, totaling 5,076,303 uncompressed bytes. Its file checks passed. Vivado also registered and instantiated the archived IP and validated the full BD in local isolation. Distribution rights for the entire generated directory are pending. V4 is outside the GitHub and portal submissions.
+The pre-exported HLS IP 2.0 and prebuilt BIT, XSA and ELF are not in this repository. The HLS IP was recognized and the full BD validated in a separate local environment; distribution of the generated IP and R2 runtime artifacts requires separate authorization. R2 remains TEST_ONLY; end-to-end reconstruction and board acceptance remain open. See [validation status](docs/VALIDATION_STATUS.md).
 
-The R2 board handoff is TEST_ONLY. The [R2 notes](candidate-b/board/R2_TEST_ONLY/) record the static artifact pairing and the session scripts. End-to-end reconstruction and board acceptance remain open. See [validation status](docs/VALIDATION_STATUS.md).
-
-Repository access is private and must be granted to authorized reviewers.
+The optional `checkRequiredFiles` check in [recreate_review_project.tcl](candidate-b/validation/vivado/recreate_review_project.tcl) prepends `origin_dir` to an already normalized HLS IP path, potentially producing an incorrect doubled path. This is recorded for review; the frozen script has not been changed or rerun.
