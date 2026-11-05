@@ -67,24 +67,27 @@ static inline ap_uint<5> fast_mod_25(uint32_t x) {
 static inline ap_uint<10> fast_mod_1004(uint32_t x) {
     #pragma HLS INLINE off
     #pragma HLS PIPELINE II=1
-    // Exact reduction using 2^10 == 1024 == 20 (mod 1004).
-    // This avoids the wide reciprocal multiply/subtract path that was the
-    // post-synthesis critical path in Middle::insert.
-    ap_uint<23> y0_partial;
+    // 2^10 == 1024 == 20 (mod 1004).
+    // Every shift operand is widened BEFORE shifting; ap_uint shifts
+    // retain the width of their left operand and otherwise truncate bits.
+    // All stage maxima fit the widths declared below for any uint32_t x.
+    const ap_uint<27> h0 = static_cast<ap_uint<27> >(x >> 10);
+    ap_uint<27> y0_partial;
     #pragma HLS BIND_OP variable=y0_partial op=add impl=fabric latency=1
-    y0_partial = static_cast<ap_uint<10> >(x & 1023U)
-               + (static_cast<ap_uint<22> >(x >> 10) << 4);
-    ap_uint<27> y0 = y0_partial
-                   + (static_cast<ap_uint<22> >(x >> 10) << 2);
-    ap_uint<21> y1 = static_cast<ap_uint<10> >(y0 & 1023U)
-                   + (static_cast<ap_uint<17> >(y0 >> 10) << 4)
-                   + (static_cast<ap_uint<17> >(y0 >> 10) << 2);
-    ap_uint<16> y2 = static_cast<ap_uint<10> >(y1 & 1023U)
-                   + (static_cast<ap_uint<11> >(y1 >> 10) << 4)
-                   + (static_cast<ap_uint<11> >(y1 >> 10) << 2);
-    ap_uint<11> r = static_cast<ap_uint<10> >(y2 & 1023U)
-                  + (static_cast<ap_uint<6> >(y2 >> 10) << 4)
-                  + (static_cast<ap_uint<6> >(y2 >> 10) << 2);
+    y0_partial = static_cast<ap_uint<27> >(x & 1023U) + (h0 << 4);
+    const ap_uint<27> y0 = y0_partial + (h0 << 2);
+
+    const ap_uint<21> h1 = static_cast<ap_uint<21> >(y0 >> 10);
+    const ap_uint<21> y1 = static_cast<ap_uint<21> >(y0 & 1023U)
+                         + (h1 << 4) + (h1 << 2);
+
+    const ap_uint<16> h2 = static_cast<ap_uint<16> >(y1 >> 10);
+    const ap_uint<16> y2 = static_cast<ap_uint<16> >(y1 & 1023U)
+                         + (h2 << 4) + (h2 << 2);
+
+    const ap_uint<11> h3 = static_cast<ap_uint<11> >(y2 >> 10);
+    ap_uint<11> r = static_cast<ap_uint<11> >(y2 & 1023U)
+                  + (h3 << 4) + (h3 << 2);
     if (r >= 1004U) {
         r -= 1004U;
     }
